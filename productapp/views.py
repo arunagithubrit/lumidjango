@@ -8,11 +8,19 @@ from django.db.models import Count
 # Create your views here.
 
 
-class CategoryCreateView(CreateView):
+class CategoryCreateView(CreateView,ListView):
     template_name="category_add.html"
     form_class=CategoryCreateForm
     model=Category
+    context_object_name="categories"
     success_url=reverse_lazy("category-add")
+
+class CategoryDetailView(DetailView):
+    template_name="category_detail.html"
+    context_object_name="category"
+    model=Category
+
+
 
 
 class ProductCreateView(CreateView):
@@ -22,28 +30,29 @@ class ProductCreateView(CreateView):
     success_url=reverse_lazy("product-add")
 
 
-# class ProductListView(ListView):
-#     template_name="product_list.html"
-#     context_object_name="products"
-#     model=Product
-def product_list(request):
-    categories = Category.objects.annotate(num_products=Count('product'))
-    products = Product.objects.all()
-    # allprods=[]
-    # catprods=Product.objects.values('category_name','id')
-    # cats={item['category_name'] for item in catprods}
-    # for cat in cats:
-    #     prod=Product.objects.filter(category_name=cat)
-    #     n=len(prod)
-    #     nSlides=n//4 + ceil((n/4)-(n//4))
-    #     allprods.append([prod,range(1,nSlides),nSlides])
+class ProductListView(ListView):
+    template_name="product_list.html"
+    context_object_name="products"
+    model=Product
+    
+# def product_list(request):
+#     categories = Category.objects.annotate(num_products=Count('product'))
+#     products = Product.objects.all()
+#     # allprods=[]
+#     # catprods=Product.objects.values('category_name','id')
+#     # cats={item['category_name'] for item in catprods}
+#     # for cat in cats:
+#     #     prod=Product.objects.filter(category_name=cat)
+#     #     n=len(prod)
+#     #     nSlides=n//4 + ceil((n/4)-(n//4))
+#     #     allprods.append([prod,range(1,nSlides),nSlides])
 
-    category_filter = request.GET.get('category_filter')
-    if category_filter:
-        products = products.filter(category_name__id=category_filter)
-    else:
-        return render(request, "product_list.html", {'categories': categories, 'products': products, 'selected_category': int(category_filter) if category_filter else None})
-        # return render(request,"product_list.html",{"categories":categories})
+#     category_filter = request.GET.get('category_filter')
+#     if category_filter:
+#         products = products.filter(category_name__id=category_filter)
+#     else:
+#         return render(request, "product_list.html", {'categories': categories, 'products': products, 'selected_category': int(category_filter) if category_filter else None})
+#         # return render(request,"product_list.html",{"categories":categories})
 
 
 class ProductDetailView(DetailView):

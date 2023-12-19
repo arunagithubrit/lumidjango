@@ -12,14 +12,15 @@
       <div class="row">
         <div class="col-2"></div>
         <div class="col-8">
-            <label for="category_filter">Filter by Category:</label>
-            <select id="category_filter" onchange="filterProducts()">
+            <!-- <label for="category_filter">Filter by Category:</label> -->
+            <!-- <select id="category_filter" onchange="filterProducts()">
                 <option value="">All Categories</option>
                 {% for category in categories %}
                     <option value="{{ category.id }}">{{ category.category_name }}</option>
 
                 {% endfor %}
-            </select>
+            </select> -->
+           
           <table class="table table-striped">
             
             <tr>
@@ -29,7 +30,7 @@
               <td>Price</td>
               <td>Action</td>
             </tr>
-            {% for pt in products %}
+            {% for pt in products%}
             <tr>
               <td>{{pt.product_name}}</td>
               <td>{{pt.category_name}}</td>
@@ -44,12 +45,12 @@
             </tr>
             {%endfor%}
           </table>
-          <script>
+          <!-- <script>
             function filterProducts() {
                 var categoryId = document.getElementById('category_filter').value;
                 window.location.href = '/?category=' + categoryId;
             }
-        </script>
+        </script> -->
         </div>
         <div class="col-2"></div>
       </div>
